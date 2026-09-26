@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Two Centroids, One Recommendation — Jerlisa Williams</title>
+  <meta name="description" content="First capstone journal entry: introducing the Salamander project and this month's architecture decisions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a href="../index.html" class="wordmark">J. Williams</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="./">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="section">
+      <div class="wrap">
+        <p class="blog-crumb"><a href="./">← All entries</a></p>
+
+        <div class="post-hero">
+          <h1>Two Centroids, One Recommendation</h1>
+          <p class="post-meta">Jerlisa Williams &nbsp;·&nbsp; September 26, 2026 &nbsp;·&nbsp; Capstone Journal, Entry 1</p>
+        </div>
+
+        <div class="post-body">
+
+          <h2>Who I am, and what I'm building</h2>
+          <p>
+            I'm Jerlisa Williams, an M.S. Computer Science student at Full
+            Sail University with a background in web design — which is why I
+            care as much about whether a model's output is usable as whether
+            it's accurate. Post-graduation I'm aiming for Data Science first,
+            Software Engineering or AI Engineering second. This is the first
+            entry in a monthly log of my capstone, Salamander: a
+            reading-recommendation app that gives brand-new ("cold-start")
+            users relevant book suggestions before the system knows their
+            taste, while keeping those suggestions diverse across genre and
+            author. I also scoped a forecasting project, Raven, before
+            deciding Salamander was the stronger year-long bet.
+          </p>
+
+          <h2>What I built this month</h2>
+          <p>
+            Mostly architecture, not code. Salamander is a scope-restarted
+            rebuild of an earlier personal library app — same React and
+            Supabase stack, blank-page design instead of just extending what
+            existed. The core is a <strong>dual-centroid</strong> approach:
+            the recommender and the diversity auditor both read from one
+            pretrained sentence-embedding space (<code>all-MiniLM-L6-v2</code>),
+            but compute two different centroids from it — one feedback-weighted,
+            driving recommendations, one left unweighted, auditing how much
+            genre and author diversity is actually on offer.
+          </p>
+
+          <div class="diagram-card">
+            <img src="salamander_recommendations_mockup.png" alt="Wireframe mockup of the Salamander recommendations dashboard, showing four recommended-book cards with reasons for each recommendation." style="width:100%;height:auto;border-radius:4px;" />
+            <p class="diagram-caption">Fig. 1 — Recommendations dashboard mockup. The fourth card, with the bolder border, is a diversity-gap suggestion rather than a feedback-weighted one.</p>
+          </div>
+
+          <div class="diagram-card">
+            <svg viewBox="0 0 720 300" role="img" aria-labelledby="diagram1-title">
+              <title id="diagram1-title">Salamander's dual-centroid architecture</title>
+              <defs>
+                <marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" style="fill:var(--text-muted)" />
+                </marker>
+              </defs>
+
+              <rect x="20" y="120" width="150" height="60" rx="6" style="fill:var(--surface-2);stroke:var(--border)" />
+              <text x="95" y="145" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:13px">New user</text>
+              <text x="95" y="163" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">interaction</text>
+
+              <line x1="170" y1="150" x2="230" y2="150" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow1)" />
+
+              <rect x="230" y="110" width="210" height="80" rx="6" style="fill:var(--surface-2);stroke:var(--brass);stroke-width:1.5" />
+              <text x="335" y="140" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:13px">Shared embedding space</text>
+              <text x="335" y="158" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">all-MiniLM-L6-v2</text>
+              <text x="335" y="176" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">(pretrained, not fine-tuned)</text>
+
+              <line x1="440" y1="130" x2="500" y2="90" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow1)" />
+              <line x1="440" y1="170" x2="500" y2="210" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow1)" />
+
+              <rect x="500" y="50" width="200" height="70" rx="6" style="fill:var(--surface-2);stroke:var(--clay)" />
+              <text x="600" y="78" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Feedback-weighted</text>
+              <text x="600" y="95" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">centroid</text>
+              <text x="600" y="112" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">→ recommendations</text>
+
+              <rect x="500" y="180" width="200" height="70" rx="6" style="fill:var(--surface-2);stroke:var(--clay)" />
+              <text x="600" y="208" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Unweighted</text>
+              <text x="600" y="225" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">centroid</text>
+              <text x="600" y="242" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">→ diversity audit</text>
+            </svg>
+            <p class="diagram-caption">Fig. 2 — One embedding space, two centroids: one drives what gets recommended, the other checks how diverse those recommendations actually are.</p>
+          </div>
+
+          <p>
+            My advisor, Dr. Amakobe, confirmed Salamander over Raven and
+            proposed comparing content-based, collaborative, and hybrid
+            recommendation strategies against precision, recall, NDCG,
+            coverage, novelty, and diversity — with a user-facing control to
+            adjust exploration. That's now a real evaluation harness on the
+            roadmap, and the roadmap itself grew a fourth milestone to hold
+            it. The diversity control specifically will be evaluated with a
+            randomized A/B design — automatic diversity weighting against
+            user-adjustable — the same split I'm already drafting IRB consent
+            paperwork for.
+          </p>
+
+          <h2>Retrospective</h2>
+          <p>
+            <strong>What went right:</strong> real committee buy-in instead
+            of a vague app pitch, and a tech stack I didn't have to relearn
+            from zero.
+          </p>
+          <p>
+            <strong>What went wrong:</strong> no working prototype yet — the
+            scope restart ate real time, and September is mostly diagrams,
+            not a running app.
+          </p>
+          <p>
+            <strong>How I'll improve:</strong> weekly build milestones
+            instead of one big end-of-month target, and building the
+            evaluation harness <em>alongside</em> the recommender instead of
+            retrofitting metrics onto it afterward.
+          </p>
+
+          <p>
+            I don't think October will turn into a rebuild — but I hope it
+            doesn't turn into a caffeine-induced haze where I'm rushing to
+            make up for time lost on unaccounted-for issues that cascaded.
+          </p>
+
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; <span id="year"></span> Jerlisa Williams. Built with GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
