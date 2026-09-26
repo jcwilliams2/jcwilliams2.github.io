@@ -354,7 +354,97 @@ button:focus-visible {
   margin: 0;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Blog ---------- */
+.blog-crumb {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 32px 0 0;
+}
+.blog-crumb a {
+  color: var(--clay);
+  text-decoration: none;
+}
+.blog-crumb a:hover { text-decoration: underline; }
+
+.post-list {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+}
+
+.post-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-left: 3px solid var(--brass);
+  padding: 4px 0 4px 22px;
+  margin-bottom: 32px;
+}
+
+.post-card h2 {
+  margin-bottom: 6px;
+}
+
+.post-date {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--clay);
+  margin: 0 0 10px;
+}
+
+.post-hero {
+  margin: 36px 0 8px;
+}
+
+.post-meta {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 36px;
+}
+
+.post-body h2 {
+  margin-top: 44px;
+}
+
+.post-body p {
+  max-width: 68ch;
+}
+
+.diagram-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 24px 0 32px;
+}
+
+.diagram-caption {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 12px 0 0;
+}
+
+.retro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin: 20px 0 32px;
+}
+
+.retro-grid h3 {
+  color: var(--clay);
+  font-size: 1rem;
+}
+
+@media (max-width: 760px) {
+  .retro-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 760px) {
   .hero-grid,
   .contact-grid {
