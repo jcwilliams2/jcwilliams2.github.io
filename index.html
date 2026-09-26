@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jerlisa Williams — Data Scientist &amp; ML Engineer</title>
+  <meta name="description" content="Portfolio of Jerlisa Williams — machine learning projects in recommendation systems, forecasting, computer vision, and NLP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a href="#top" class="wordmark">J. Williams</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section id="top" class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker">Data scientist &amp; ML engineer</p>
+          <h1>Jerlisa Williams</h1>
+          <p class="hero-lede">
+            I build systems that learn from data and have to work for real people —
+            recommendation engines, forecasting models, and applied computer vision,
+            grounded in an M.S. in Computer Science and a background in web development.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">See the work</a>
+            <a class="btn btn-ghost" href="https://github.com/jcwilliams2" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="hero-terminal" aria-hidden="true">
+          <div class="terminal-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="terminal-title">evaluate.py</span>
+          </div>
+          <pre class="terminal-body"><code id="terminal-output"></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="wrap about-grid">
+        <h2>About</h2>
+        <div class="about-copy">
+          <p>
+            I'm an M.S. Computer Science student at Full Sail University, focused on
+            data science with machine learning and AI engineering close behind. Before
+            grad school, I worked in web design — which is part of why I care as much
+            about whether a model's output is usable as whether it's accurate.
+          </p>
+          <p>
+            My coursework and capstone work span the full stack of a data science
+            project: pulling and cleaning real data, building and comparing models,
+            evaluating them honestly, and shipping the result behind an interface
+            someone can actually use. Recent work includes a cold-start recommendation
+            system, a mixed-frequency forecasting model for currency markets, and
+            several applied ML systems in computer vision and NLP.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section section-alt">
+      <div class="wrap">
+        <h2>Projects</h2>
+
+        <article class="project-featured">
+          <div class="project-featured-body">
+            <p class="project-eyebrow">Capstone · in progress</p>
+            <h3>Salamander</h3>
+            <p>
+              A reading-recommendation app that tackles the "cold-start" problem —
+              giving new users relevant book suggestions before the system knows their
+              taste — while keeping the results diverse across genres and authors.
+              Built on a shared sentence-embedding space with a dual-centroid design:
+              one feedback-weighted centroid drives recommendations, a second unweighted
+              centroid audits how much genre and author diversity is on offer.
+            </p>
+            <ul class="tag-list">
+              <li>React</li>
+              <li>FastAPI</li>
+              <li>Supabase / pgvector</li>
+              <li>Sentence-Transformers</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="project-featured">
+          <div class="project-featured-body">
+            <p class="project-eyebrow">Capstone · plan B</p>
+            <h3>Raven</h3>
+            <p>
+              A forecasting study on whether geopolitical risk (GPR) improves short-term
+              CAD/USD prediction. Compares a Mixed-Frequency Transformer against ANN and
+              LSTM baselines under three conditions — no GPR signal, GPR resampled to
+              daily frequency, and GPR left at its native mixed frequency — to see
+              whether keeping the risk signal's real cadence actually helps.
+            </p>
+            <ul class="tag-list">
+              <li>Python</li>
+              <li>TensorFlow / Keras</li>
+              <li>GARCH (arch)</li>
+              <li>FRED &amp; Yahoo Finance data</li>
+            </ul>
+          </div>
+        </article>
+
+        <h3 class="projects-subhead">Coursework</h3>
+        <ul class="project-list">
+          <li class="project-item">
+            <h4>Production-grade LLM chatbot</h4>
+            <p>
+              GPT-4o-mini backend on FastAPI with streaming responses, tool calling,
+              ChromaDB long-term memory, content moderation, and rate limiting —
+              validated with a 20-prompt pytest evaluation harness and a temperature
+              ablation study.
+            </p>
+          </li>
+          <li class="project-item">
+            <h4>Facial age prediction &amp; bias audit</h4>
+            <p>
+              DeepFace and OpenCV pipeline for age prediction that surfaced a
+              compression bias — predictions clustering into the 30–39 band regardless
+              of true age — confirmed with confidence-heatmap analysis.
+            </p>
+          </li>
+          <li class="project-item">
+            <h4>Abstractive news summarization</h4>
+            <p>
+              Gemma-2-2b-it summarization system comparing few-shot and
+              chain-of-thought prompting; few-shot consistently outperformed CoT on
+              ROUGE-L.
+            </p>
+          </li>
+          <li class="project-item">
+            <h4>Autonomous drone pathfinding</h4>
+            <p>
+              A* pathfinding with dynamic obstacle avoidance in a pygame simulation,
+              written up as an IEEE-format paper on the approach and its trade-offs.
+            </p>
+          </li>
+          <li class="project-item">
+            <h4>Smart city traffic simulation</h4>
+            <p>
+              SimPy discrete-event simulation paired with Unity 3D visualization and
+              Q-learning traffic-signal optimization, run across a 65×65 grid over a
+              full 24-hour cycle.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="wrap">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h3>Machine learning</h3>
+            <ul class="tag-list">
+              <li>Regression &amp; classification</li>
+              <li>Decision Tree / Random Forest / SVR</li>
+              <li>Logistic Regression / Naive Bayes / KNN</li>
+              <li>Clustering (k-means, hierarchical)</li>
+              <li>PCA</li>
+              <li>Cohen's Kappa, ROC/AUC, F1, ROUGE-L</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Applied AI</h3>
+            <ul class="tag-list">
+              <li>Computer vision (OpenCV, DeepFace, YOLOv8)</li>
+              <li>LLM tool calling &amp; RAG-style memory</li>
+              <li>Prompt engineering (few-shot, CoT)</li>
+              <li>Recommendation systems</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Engineering</h3>
+            <ul class="tag-list">
+              <li>Python, pandas</li>
+              <li>FastAPI</li>
+              <li>React, Supabase, Auth0</li>
+              <li>SimPy discrete-event simulation</li>
+              <li>Row Level Security policies</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-alt">
+      <div class="wrap contact-grid">
+        <div>
+          <h2>Get in touch</h2>
+          <p>
+            Open to data science, software engineering, and AI engineering roles.
+            The best way to reach me is by email.
+          </p>
+        </div>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:jerlisacwilliams@gmail.com">jerlisacwilliams@gmail.com</a>
+          <a class="btn btn-ghost" href="https://github.com/jcwilliams2" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="assets/Jerlisa_Williams_Resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; <span id="year"></span> Jerlisa Williams. Built with GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
