@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Filters, Fallbacks, and a Cleaner Catalog — Jerlisa Williams</title>
+  <meta name="description" content="Second capstone journal entry: Salamander goes from architecture on paper to a running app, six milestones in." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a href="../index.html" class="wordmark">J. Williams</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="./">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="section">
+      <div class="wrap">
+        <p class="blog-crumb"><a href="./">← All entries</a></p>
+
+        <div class="post-hero">
+          <h1>Filters, Fallbacks, and a Cleaner Catalog</h1>
+          <p class="post-meta">Jerlisa Williams &nbsp;·&nbsp; October 25, 2026 &nbsp;·&nbsp; Capstone Journal, Entry 2</p>
+        </div>
+
+        <div class="post-body">
+
+          <h2>The goal</h2>
+          <p>
+            When I wrote <a href="two-centroids-one-recommendation.html">my last entry</a>,
+            Salamander was in its infancy — a dual-centroid design on paper, a
+            chosen stack, and no working prototype. I promised weekly build
+            milestones and an evaluation harness built <em>alongside</em> the
+            recommender, and I hoped October wouldn't become a rushed
+            catch-up month. So the goal this month was to grow it up: get the
+            core logic implemented, not just designed. <em>Would the
+            recommender, the diversity auditor, and a searchable catalog
+            actually hold together on real books?</em> They do — the core
+            logic is in place, and Milestone 6 is complete.
+          </p>
+
+          <div class="diagram-card">
+            <svg viewBox="0 0 700 120" role="img" aria-labelledby="progress-title">
+              <title id="progress-title">Roadmap progress: 6 of 12 milestones complete, the last 3 held as buffer</title>
+              <text x="0" y="18" style="fill:var(--text);font-family:var(--font-display);font-size:13px">6 of 12 milestones complete</text>
+
+              <g style="fill:var(--brass)">
+                <rect x="0"   y="34" width="50" height="28" rx="4" />
+                <rect x="56"  y="34" width="50" height="28" rx="4" />
+                <rect x="112" y="34" width="50" height="28" rx="4" />
+                <rect x="168" y="34" width="50" height="28" rx="4" />
+                <rect x="224" y="34" width="50" height="28" rx="4" />
+                <rect x="280" y="34" width="50" height="28" rx="4" />
+              </g>
+              <g style="fill:var(--border)">
+                <rect x="336" y="34" width="50" height="28" rx="4" />
+                <rect x="392" y="34" width="50" height="28" rx="4" />
+                <rect x="448" y="34" width="50" height="28" rx="4" />
+              </g>
+              <g style="fill:none;stroke:var(--border);stroke-dasharray:4 3">
+                <rect x="504" y="34" width="50" height="28" rx="4" />
+                <rect x="560" y="34" width="50" height="28" rx="4" />
+                <rect x="616" y="34" width="50" height="28" rx="4" />
+              </g>
+
+              <g style="font-family:var(--font-display);font-size:11px" text-anchor="middle">
+                <text x="25"  y="52" style="fill:#0b141a">1</text>
+                <text x="81"  y="52" style="fill:#0b141a">2</text>
+                <text x="137" y="52" style="fill:#0b141a">3</text>
+                <text x="193" y="52" style="fill:#0b141a">4</text>
+                <text x="249" y="52" style="fill:#0b141a">5</text>
+                <text x="305" y="52" style="fill:#0b141a">6</text>
+                <text x="361" y="52" style="fill:var(--text-muted)">7</text>
+                <text x="417" y="52" style="fill:var(--text-muted)">8</text>
+                <text x="473" y="52" style="fill:var(--text-muted)">9</text>
+                <text x="529" y="52" style="fill:var(--text-muted)">10</text>
+                <text x="585" y="52" style="fill:var(--text-muted)">11</text>
+                <text x="641" y="52" style="fill:var(--text-muted)">12</text>
+              </g>
+              <text x="0" y="96" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">complete · planned · buffer (dashed)</text>
+            </svg>
+            <p class="diagram-caption">Fig. 1 — Where the roadmap stands as of October 25.</p>
+          </div>
+
+          <h2>What I built</h2>
+          <p>
+            <strong>The recommender got its feedback loop (Milestone 4).</strong>
+            Votes and reading status now feed a weighting table for the
+            recommendation centroid, with caching that invalidates on every
+            vote or status change. Downvoted books are filtered out of future
+            suggestions at a 0.40 cosine threshold I tuned against real
+            similarity scores — and I documented the one gap I know about:
+            the all-downvote fallback works, but an all-<em>upvote</em>
+            profile slips past it.
+          </p>
+          <p>
+            <strong>The diversity side became visible (Milestone 5).</strong>
+            Diversity suggestions, reading visualizations, a reading-history
+            dashboard, and a Want to Read list all landed. The exploration
+            control mattered most for the research question: re-ranking
+            raised measured list diversity from 0.668 to 0.786.
+          </p>
+
+          <div class="diagram-card">
+            <p class="diagram-caption" style="margin:0 0 10px">Then — the wireframe from my design document</p>
+            <img src="salamander_recommendations_mockup.png" alt="Wireframe mockup of the planned Salamander recommendations page: four recommendation cards with a reason on each, the fourth marked as a diversity-gap suggestion." style="width:100%;height:auto;border-radius:4px;" />
+            <p class="diagram-caption" style="margin:22px 0 10px">Now — the running app, with my email redacted</p>
+            <img src="salamander_recommendations_actual.png" alt="Screenshot of the running Salamander recommendations page: a 'How adventurous?' slider set to Balanced, a grid of recommended books with covers and reasons, vote buttons and status selectors, and a separate 'Something different' section of diversity picks." style="width:100%;height:auto;border-radius:4px;" />
+            <p class="diagram-caption">Fig. 2 — Same page, then and now. The wireframe promised book cards with reasons; the app adds real covers, a "How adventurous?" slider, vote and reading-status controls on every book, and a separate "Something different" section for diversity picks.</p>
+          </div>
+
+          <p>
+            <strong>The catalog became searchable and self-healing
+            (Milestone 6).</strong> Multi-genre filtering matches <em>any</em>
+            selected genre and ranks books by how many they match — in
+            testing, 177 books carried either of two genres and 13 carried
+            both, which ranked first. When a search finds nothing locally,
+            the app checks external sources and, only if the reader confirms,
+            ingests that single book through the same pipeline: metadata,
+            cleaning, embedding. Nothing is added without a click.
+          </p>
+
+          <div class="diagram-card">
+            <svg viewBox="0 0 700 170" role="img" aria-labelledby="numbers-title">
+              <title id="numbers-title">Catalog size grew from about 70 to over 700 books, and list diversity rose from 0.668 to 0.786</title>
+              <text x="0" y="22" style="fill:var(--text);font-family:var(--font-display);font-size:13px">Catalog size (books)</text>
+              <rect x="0" y="30" width="35"  height="22" rx="3" style="fill:var(--border)" />
+              <text x="45" y="46" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">~70 at start</text>
+              <rect x="0" y="58" width="350" height="22" rx="3" style="fill:var(--brass)" />
+              <text x="360" y="74" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">700+ after discovery runs</text>
+
+              <text x="0" y="112" style="fill:var(--text);font-family:var(--font-display);font-size:13px">List diversity (exploration re-ranking)</text>
+              <rect x="0" y="120" width="267" height="18" rx="3" style="fill:var(--border)" />
+              <text x="277" y="134" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">0.668 before</text>
+              <rect x="0" y="144" width="314" height="18" rx="3" style="fill:var(--brass)" />
+              <text x="324" y="158" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">0.786 after</text>
+            </svg>
+            <p class="diagram-caption">Fig. 3 — Two numbers I can point to on a hard day. Diversity bars are drawn to scale; catalog bars are illustrative.</p>
+          </div>
+
+          <p>
+            Under all of it sits a bigger catalog — roughly 70 books grown
+            past 700 by a discovery script pulling from Open Library and the
+            NYT Bestsellers API. I also finished the three deferred research
+            tasks (collaborative filtering, hybrid blending, and the
+            evaluation harness), so the strategy comparison my advisor
+            suggested now runs — on simulated readers, which is why I'm
+            treating those results as preliminary.
+          </p>
+
+          <h2>Retrospective</h2>
+          <p>
+            <strong>What went right:</strong> the architecture from last month
+            survived contact with real code — the two centroids did their two
+            jobs — and the weekly milestone rhythm I promised actually worked.
+            Every cleanup script also runs as a dry run first and never
+            writes without an explicit <code>--apply</code>, so messy data got
+            fixed without new damage. My advisor liked the Want to Read demo
+            and called it a good project to put online.
+          </p>
+          <p>
+            <strong>What went wrong:</strong> some deferred tasks were marked
+            complete in my roadmap with no code behind them — I only caught
+            it while writing the thesis. And catalog data kept fighting back:
+            duplicate editions, "Last, First" author names, bad genre tags,
+            and an accent mismatch (<em>Inés</em> vs <em>Ines</em>) that
+            nearly let a duplicate through. Paperwork also trailed the code.
+          </p>
+          <p>
+            <strong>How I'll improve:</strong> verify a task against the
+            running code before I mark it done, write each findings-log entry
+            the day I find the issue, and fix accent-insensitive matching
+            before it becomes Milestone 7's problem.
+          </p>
+
+          <h2>Ready for the next phase?</h2>
+          <p>
+            Mostly. With the core logic implemented — the recommender, the
+            diversity auditor, and a catalog that can grow on demand —
+            Salamander has gone from infancy to a working foundation. What's
+            left is two-sided: making it <em>pretty</em> and making it do
+            more. Right now it's functional wireframes; the next milestones
+            bring a real visual identity, starting with a light and dark
+            theme, alongside new functionality like yearly reading goals and
+            on-demand "why would I like this?" explanations. Deployment
+            (my advisor suggested Railway for the API and Vercel for the
+            front end) and the thesis draft run in parallel.
+          </p>
+          <p>
+            Given my web design background, that styling pass is one I'm
+            looking forward to. <em>Does the dual-centroid idea still feel as
+            clean once it looks the part and the extras pile on?</em> That's
+            what I want to find out next — and no caffeine-induced haze
+            required.
+          </p>
+
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; <span id="year"></span> Jerlisa Williams. Built with GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
