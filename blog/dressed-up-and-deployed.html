@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Dressed Up and Deployed — Jerlisa Williams</title>
+  <meta name="description" content="Third capstone journal entry: themes, a Library, book pages, and getting Salamander off localhost and onto Railway and Vercel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a href="../index.html" class="wordmark">J. Williams</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="./">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="section">
+      <div class="wrap">
+        <p class="blog-crumb"><a href="./">← All entries</a></p>
+
+        <div class="post-hero">
+          <h1>Dressed Up and Deployed</h1>
+          <p class="post-meta">Jerlisa Williams &nbsp;·&nbsp; November 20, 2026 &nbsp;·&nbsp; Capstone Journal, Entry 3</p>
+        </div>
+
+        <div class="post-body">
+
+          <h2>The goal</h2>
+          <p>
+            In <a href="filters-fallbacks-and-a-cleaner-catalog.html">my last entry</a>,
+            Salamander had its core logic but not much polish — functional
+            wireframes, running only on my laptop. The goal this month was
+            twofold: make it look like something I'd want to open, and get it
+            off localhost. <em>Would an app that grew up on one machine
+            survive a real deployment — and still feel like one app once the
+            extras piled on?</em> Mostly yes, with a few detours — and ten of the twelve milestones now done.
+          </p>
+
+          <h2>What I built</h2>
+          <p>
+            <strong>A look that's checked, not just chosen (Milestone 7).</strong>
+            Dark mode grew into nine themes — light, dark, and seven drawn from
+            interior and pattern images I liked. The rule that kept it
+            manageable: every color lives in one file, and components only use
+            CSS variables, never a hard-coded hex. A small script checks each
+            theme against the WCAG contrast guidelines, so a pretty palette
+            can't quietly make a button unreadable. Optional yearly reading goals, with
+            pace and stats, landed in the same milestone.
+          </p>
+          <div class="diagram-card">
+            <p class="diagram-caption" style="margin:0 0 10px">The Library, in a light theme</p>
+            <img src="salamander_library.png" alt="Screenshot of the Salamander Library page in a cream and brown theme: sort buttons for Status, Newest added and Oldest added, then a collapsible Reading group with progress bars and the start of a Want to Read group, each book shown as a card with its cover." style="width:100%;height:auto;border-radius:4px;" />
+            <p class="diagram-caption" style="margin:22px 0 10px">Compare Two Books, in a dark theme</p>
+            <img src="salamander_compare.png" alt="Screenshot of the Salamander Compare Two Books page in a dark teal theme: two book covers side by side, a plain-sentence similarity summary, and the genre tags that appear in only one of the two books." style="width:100%;height:auto;border-radius:4px;" />
+            <p class="diagram-caption">Fig. 1 — One app, two of the nine themes. The Library sorts by status and shows progress bars on books I'm reading; Compare Two Books explains similarity in a plain sentence and lists the genre tags each book has alone.</p>
+          </div>
+
+          <p>
+            <strong>A Library I can edit (Milestone 8).</strong> The Library
+            sorts by status and year added, and the reading log is editable —
+            start and finish dates can be backfilled, because nobody's reading
+            history begins the day they sign up. Month in Books turns a month
+            of finished reads into shareable cards, drawn on a canvas that
+            reads the active theme's CSS variables so they always match.
+          </p>
+          <div class="diagram-card">
+            <img src="salamander_month_in_books.png" alt="Three Month in Books cards for October 2026 side by side: a summary card showing 14 books finished, top genres and average time to finish; an all-covers grid of the 14 books; and a wrap-up card with four covers and a genre breakdown donut chart." style="width:100%;height:auto;border-radius:4px;" />
+            <p class="diagram-caption">Fig. 2 — Month in Books for October: the summary, all-covers, and wrap-up cards, each drawn from the active theme's colors.</p>
+          </div>
+
+          <p>
+            <strong>Extras on the same embedding space (Milestone 9).</strong>
+            Every book now has its own page, with a "Why would I like this?"
+            button that explains any catalog book against my taste centroid,
+            plus a diversity digest that reuses the Milestone 3 gap scoring. All of
+            it runs on the same <code>all-MiniLM-L6-v2</code> vectors already
+            stored in pgvector, so neither needed a new model — <em>which answers last month's
+            question:</em> the dual-centroid design absorbed the extras
+            without strain.
+          </p>
+          <p>
+            <strong>Progress and fallbacks (Milestone 10).</strong> Reading
+            progress is stored as a percent first and a page number second, so
+            a bar survives a corrected page count. Compare Two Books explains
+            similarity in a plain sentence, and skipping onboarding now gives
+            ten NYT bestsellers on a schedule instead of a live call each time.
+          </p>
+
+          <div class="diagram-card">
+            <svg viewBox="0 0 720 260" role="img" aria-labelledby="arch-title">
+              <title id="arch-title">Deployment architecture: browser to Vercel frontend to Railway FastAPI backend to Supabase and external book sources</title>
+              <defs>
+                <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" style="fill:var(--text-muted)" />
+                </marker>
+              </defs>
+
+              <rect x="0" y="95" width="120" height="70" rx="6" style="fill:var(--surface-2);stroke:var(--border)" />
+              <text x="60" y="125" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Reader's</text>
+              <text x="60" y="143" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">browser</text>
+
+              <line x1="120" y1="130" x2="170" y2="130" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow2)" />
+
+              <rect x="170" y="85" width="150" height="90" rx="6" style="fill:var(--surface-2);stroke:var(--clay)" />
+              <text x="245" y="115" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Vercel</text>
+              <text x="245" y="135" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">React + Vite</text>
+              <text x="245" y="152" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">frontend</text>
+
+              <line x1="320" y1="130" x2="370" y2="130" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow2)" />
+
+              <rect x="370" y="85" width="150" height="90" rx="6" style="fill:var(--surface-2);stroke:var(--clay)" />
+              <text x="445" y="115" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Railway</text>
+              <text x="445" y="135" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">FastAPI backend</text>
+              <text x="445" y="152" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">+ scheduled NYT job</text>
+
+              <line x1="520" y1="115" x2="565" y2="65" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow2)" />
+              <line x1="520" y1="145" x2="565" y2="195" style="stroke:var(--text-muted);stroke-width:1.5" marker-end="url(#arrow2)" />
+
+              <rect x="565" y="25" width="155" height="80" rx="6" style="fill:var(--surface-2);stroke:var(--brass);stroke-width:1.5" />
+              <text x="642" y="55" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Supabase</text>
+              <text x="642" y="75" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">Postgres + pgvector</text>
+              <text x="642" y="92" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">+ Auth</text>
+
+              <rect x="565" y="155" width="155" height="80" rx="6" style="fill:var(--surface-2);stroke:var(--border)" />
+              <text x="642" y="183" text-anchor="middle" style="fill:var(--text);font-family:var(--font-display);font-size:12.5px">Book sources</text>
+              <text x="642" y="203" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">Open Library · ISBNdb</text>
+              <text x="642" y="220" text-anchor="middle" style="fill:var(--text-muted);font-family:var(--font-display);font-size:11px">Google Books · NYT</text>
+            </svg>
+            <p class="diagram-caption">Fig. 3 — The deployed stack. The browser only talks to Vercel; the API keys stay on the backend.</p>
+          </div>
+
+          <p>
+            <strong>Getting it off localhost.</strong> My advisor suggested
+            Railway for the API and Vercel for the front end, with Supabase
+            underneath — and Salamander is now live at
+            <a href="https://salamander-capstone-project.vercel.app/">salamander-capstone-project.vercel.app</a>.
+            Step one was unglamorous: swapping every hard-coded
+            <code>localhost:8000</code> for one environment variable. Step two
+            was a real bug — the backend crash-looped on startup. I blamed
+            request size, then HTTP/2, and was wrong both times; the logs
+            finally showed a Railway variable where my Supabase key had
+            swallowed a trailing newline and the next line of my
+            <code>.env</code>. Startup was also downloading the whole catalog
+            just to average genre embeddings, so a Postgres function now does
+            that in the database.
+          </p>
+
+          <h2>Retrospective</h2>
+          <p>
+            <strong>What went right:</strong> last month's promise stuck — I
+            said I'd verify work against the running app, and every addition
+            is now checked on the deployed site, not just my machine. The
+            one-file theme system also meant new screens inherited the look
+            without rework.
+          </p>
+          <p>
+            <strong>What went wrong:</strong> I guessed at the deployment
+            crash twice before reading the logs closely, and secrets showed up
+            in one of them, so I rotated them. Paperwork still trails the
+            code.
+          </p>
+          <p>
+            <strong>How I'll improve:</strong> read the logs first and write each
+            finding the day I verify it.
+          </p>
+
+          <p>
+            <strong>Time and what I learned:</strong> I finished four
+            milestones in about four weeks, though deployment debugging and
+            paperwork ate hours I'd budgeted for features. I'm leaving the
+            month with practical skills — reading deployment logs,
+            contrast-checking a design system, running a real deployment — plus a
+            deployed recommender and a second thesis draft. My HCI coursework
+            on usability and data visualization shaped the contrast checks,
+            the plain-language labels, and the reading charts.
+          </p>
+          <p>
+            <strong>Working with my advisor:</strong> At an early-November
+            check-in I reviewed my roadmap with him and left with a plan for
+            the last milestones: a landing page, a login and homepage
+            redesign, an admin back end, and a staging deployment. On
+            November 19 I demoed Milestone 10 live; he was glad to see it
+            deployed, and he's emailing feedback on my thesis draft.
+          </p>
+
+          <h2>Ready for the next phase?</h2>
+          <p>
+            Mostly. Two milestones remain, and they're the visible ones: a landing
+            page, redesigned login, and real logo, then an admin back end and
+            a staging pipeline. After that, the defense. <em>Does an app that
+            does this much still tell one clear story to someone seeing it
+            for the first time?</em> That landing page has to answer it.
+          </p>
+
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; <span id="year"></span> Jerlisa Williams. Built with GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
